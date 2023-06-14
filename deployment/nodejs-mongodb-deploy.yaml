@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: nodejs-mongodb
+  name: ''
+spec:
+  selector:
+    matchLabels:
+      app: nodejs-mongodb
+  replicas: 3
+  template:
+    metadata:
+      labels:
+        app: nodejs-mongodb
+    spec:
+      containers:
+        - name: container
+          image: 
+            - image-registry.openshift-image-registry.svc:5000/nodejs-mongodb/nodejs-mongo-persistent
+          ports:
+            - containerPort: 8080
+              protocol: TCP
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
